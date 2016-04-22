@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>5849f5f5-7092-4887-8b41-cfd51bc4e6bc</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>xwing.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>xwing</Name>
+    <RootNamespace>xwing</RootNamespace>
+    <InterpreterId>{907d3225-fc98-4c9d-a983-489c6a336541}</InterpreterId>
+    <InterpreterVersion>3.5</InterpreterVersion>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <Environment>TCL_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tcl8.6
+TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Environment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="actions\barrel_roll.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="actions\boost.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="actions\evade.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="actions\focus.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="actions\target_lock.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\board.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\ship.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\small_ship.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\tie_fighter.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\x_wing.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ui\board_renderer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ui\main_window.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ui\ship_renderer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="xwing.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+    <Folder Include="models\" />
+    <Folder Include="actions\" />
+    <Folder Include="ui\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="venv\">
+      <Id>{907d3225-fc98-4c9d-a983-489c6a336541}</Id>
+      <BaseInterpreter>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</BaseInterpreter>
+      <Version>3.5</Version>
+      <Description>venv (Python 64-bit 3.5)</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <LibraryPath>Lib\</LibraryPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>Amd64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\death_star_mat.jpg" />
+    <Content Include="LICENSE" />
+    <Content Include="README.md" />
+    <Content Include="requirements.txt" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <Import Condition="Exists($(PtvsTargetsFile))" Project="$(PtvsTargetsFile)" />
+  <Import Condition="!Exists($(PtvsTargetsFile))" Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
