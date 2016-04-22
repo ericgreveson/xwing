@@ -1,3 +1,6 @@
+from models.faction import Faction
+from models.movement_template import MovementTemplate
+
 from ui.board_renderer import BoardRenderer
 
 import cairo
@@ -32,13 +35,32 @@ class MainWindow(tk.Frame):
         self._board_renderer = BoardRenderer(self._board)
 
         # Do the initial draw
+        Dir = MovementTemplate.Direction
+        self._movements = [
+            MovementTemplate(Dir.Straight, 1),
+            MovementTemplate(Dir.LeftBank, 1),
+            MovementTemplate(Dir.Straight, 2),
+            MovementTemplate(Dir.RightBank, 1),
+            None,
+            MovementTemplate(Dir.LeftTurn, 3),
+            None,
+            MovementTemplate(Dir.RightTurn, 2),
+            None,
+            MovementTemplate(Dir.Straight, 3)]
+        self._movements.reverse()
         self._redraw_callback()
 
     def _redraw_callback(self):
         """
         Redraw the window
         """
-        
+        # Move the first ship
+        if self._movements:
+            movement = self._movements.pop()
+            if movement:
+                first_imperial = [ship for ship in self._board.ships if ship.faction == Faction.imperial][0]
+                movement.apply(first_imperial)
+
         # Create or update rendering surface
         edge_size = 720
         self._update_surface(edge_size)

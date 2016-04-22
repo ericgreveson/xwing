@@ -1,6 +1,8 @@
+from models.faction import Faction
 from models.movement_template import MovementTemplate
-from models.tie_fighter import TieFighter
-from models.x_wing import XWing
+from models.ship_registry import ShipRegistry
+
+import json
 
 class Board:
     """
@@ -13,18 +15,59 @@ class Board:
         # Board is 3ft by 3ft
         board_size = 914
         self.dimensions = (board_size, board_size)
+        self.ships = []
 
-        # Add a TIE fighter in the bottom left corner
-        imperial_one = TieFighter()
-        imperial_one.position = (MovementTemplate.STANDARD_WIDTH * 2, MovementTemplate.STANDARD_WIDTH * 2)
-        imperial_one.orientation = 180
+    def load_board_setup(self, json_file):
+        """
+        Load the initial board setup from file
+        json_file: The JSON file name to load the setup from
+        Format:
+        {
+          "players": {
+            "rebel": [
+              {
+                "ship": "XWing",
+                "position": [ 874, 874 ],
+                "orientation": 0
+              },
+              ....
+            ],
+            "imperial": [
+              {
+                "ship": "TieFighter",
+                ...
+              },
+              ...
+            ]
+          }
+        }
+        """
+        ship_registry = ShipRegistry()
 
-        imperial_two = TieFighter()
-        imperial_two.position = (MovementTemplate.STANDARD_WIDTH * 5, MovementTemplate.STANDARD_WIDTH * 2)
-        imperial_two.orientation = 180
+        factions = set()
+        with open(json_file) as f:
+            data = json.load(f)
+            for faction_name, ships in data["players"].items():
+                faction = Faction(faction_name)
+                if faction in factions:
+                    raise ValueError("Only one of each type of faction allowed!")
+                factions.add(faction)
 
-        rebel_one = XWing()
-        rebel_one.position = (board_size - MovementTemplate.STANDARD_WIDTH * 2, board_size - MovementTemplate.STANDARD_WIDTH * 2)
-        rebel_one.orientation = 0
+                for ship in ships:
+                    # Get the type of ship and make one
+                    ship_class = ship_registry.ship_class_from_string(ship["ship"])
+                    ship_instance = ship_class()
 
-        self.ships = [imperial_one, imperial_two, rebel_one]
+                    # Check its faction matches
+                    if ship_instance.faction != faction:
+                        raise ValueError("Ship faction doesn't match player faction!")
+
+                    # Set its position and orientation
+                    ship_instance.position = ship["position"]
+                    ship_instance.orientation = ship["orientation"]
+
+                    # Add it to the ship list
+                    self.ships.append(ship_instance)
+
+        if len(factions) != 2:
+            raise ValueError("Need exactly 2 factions for a valid game!")

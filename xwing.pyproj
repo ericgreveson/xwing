@@ -18,6 +18,7 @@
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <Environment>TCL_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tcl8.6
 TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Environment>
+    <CommandLineArguments>data/basic_board_setup.json</CommandLineArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,7 +47,16 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="models\board.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\faction.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\movement_template.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\ship.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\ship_registry.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\small_ship.py">

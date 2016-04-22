@@ -1,2 +1,3 @@
+numpy>=1.10
 Pillow>=3.2
-pycairo
+pycairo>=1.10

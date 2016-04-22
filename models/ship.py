@@ -15,12 +15,12 @@ class Ship:
         self.actions = actions
         self.attack = attack
         self.agility = agility
-        self.max_hull = max_hull
+        self.hull = max_hull
         self.max_shield = max_shield
 
         # And our initial health
-        self.hull = max_hull
         self.shield = max_shield
+        self.damage = []
 
         # Set initial position of the ship centre
         self.position = (0, 0)

@@ -28,7 +28,7 @@ class ShipRenderer:
         self._ship = ship
         self._base_color_rgba = self._get_base_color()
         self._pilot_token_surface_pattern = cairo.SurfacePattern(pilot_token_surface)
-        self._pilot_token_surface_pattern.set_matrix(cairo.Matrix(xx=sw/bw, yy=sh/bh, x0=sw/2, y0=sh/2))
+        self._pilot_token_surface_pattern.set_matrix(cairo.Matrix(xx=sw/bw, yy=-sh/bh, x0=sw/2, y0=sh/2))
         
     def render(self, context):
         """

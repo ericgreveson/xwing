@@ -1,0 +1,23 @@
+{
+  "players": {
+    "rebel": [
+      {
+        "ship": "XWing",
+        "position": [ 874, 874 ],
+        "orientation": 180
+      }
+    ],
+    "imperial": [
+      {
+        "ship": "TieFighter",
+        "position": [ 40, 40 ],
+        "orientation": 0
+      },
+      {
+        "ship": "TieFighter",
+        "position": [ 100, 40 ],
+        "orientation": 0
+      }
+    ]
+  }
+}
