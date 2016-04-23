@@ -66,6 +66,9 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="gameplay\console_player.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="gameplay\player.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="gameplay\setup.py">
       <SubType>Code</SubType>
     </Compile>
@@ -82,6 +85,9 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\board.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\dial.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\faction.py">
@@ -121,7 +127,7 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="ui\main_window.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ui\ship_renderer.py">
+    <Compile Include="ui\pilot_renderer.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ui\__init__.py">
@@ -168,8 +174,8 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Content Include="data\pilot_registry.json" />
     <Content Include="data\ship_registry.json" />
     <Content Include="images\death_star_mat.png" />
-    <Content Include="images\tiefighter_pilot_token.png" />
-    <Content Include="images\xwing_pilot_token.png" />
+    <Content Include="images\academypilot_pilot_token.png" />
+    <Content Include="images\rookiepilot_pilot_token.png" />
     <Content Include="LICENSE" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
