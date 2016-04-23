@@ -4,7 +4,10 @@ from actions.evade import Evade
 from actions.focus import Focus
 from actions.target_lock import TargetLock
 
+from models.bearing_registry import BearingRegistry
+from models.dial import Dial
 from models.faction import Faction
+from models.large_ship import LargeShip
 from models.small_ship import SmallShip
 
 import json
@@ -13,7 +16,7 @@ class ShipRegistry:
     """
     Registry of ship classes
     """
-    SHIP_CLASSES = [SmallShip]
+    SHIP_CLASSES = [SmallShip, LargeShip]
     ACTIONS = [BarrelRoll, Boost, Evade, Focus, TargetLock]
 
     class ShipPrototype:
@@ -34,14 +37,16 @@ class ShipRegistry:
                 # Parse ship details
                 name = ship_type["name"]
 
+                ship_dial = ship_type["dial"]
+                green = [BearingRegistry.bearing_from_string(bearing_name) for bearing_name in ship_dial["green"]]
+                white = [BearingRegistry.bearing_from_string(bearing_name) for bearing_name in ship_dial["white"]]
+                red = [BearingRegistry.bearing_from_string(bearing_name) for bearing_name in ship_dial["red"]]
+
                 prototype = ShipRegistry.ShipPrototype()
                 prototype.ship_class = ShipRegistry._ship_class_from_string(ship_type["class"])
-                prototype.actions = [ShipRegistry._action_from_string(action_name) for action_name in ship_type["actions"]]
                 prototype.faction = Faction[ship_type["faction"]]
-                prototype.attack = ship_type["attack"]
-                prototype.agility = ship_type["agility"]
-                prototype.hull = ship_type["hull"]
-                prototype.shield = ship_type["shield"]
+                prototype.actions = [ShipRegistry._action_from_string(action_name) for action_name in ship_type["actions"]]
+                prototype.dial = Dial(green, white, red)
 
                 # Place in the registry
                 self._ship_prototypes[name] = prototype
@@ -57,10 +62,7 @@ class ShipRegistry:
             name,
             prototype.faction,
             prototype.actions,
-            prototype.attack,
-            prototype.agility,
-            prototype.hull,
-            prototype.shield)
+            prototype.dial)
 
     @staticmethod
     def _ship_class_from_string(ship_class_name):
@@ -73,7 +75,7 @@ class ShipRegistry:
             if ship_class.__name__ == ship_class_name:
                 return ship_class
 
-        raise ValueError("Unknown ship class")
+        raise ValueError("Unknown ship class: {0}".format(ship_class_name))
 
     @staticmethod
     def _action_from_string(action_name):
@@ -84,4 +86,4 @@ class ShipRegistry:
             if action.__name__ == action_name:
                 return action
 
-        raise ValueError("Unknown action")
+        raise ValueError("Unknown action: {0}".format(action_name))

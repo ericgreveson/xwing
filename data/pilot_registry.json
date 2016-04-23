@@ -1,0 +1,28 @@
+{
+  "pilots": [
+    {
+      "name": "rookiepilot",
+      "faction": "rebel",
+      "ship": "xwing",
+      "skill": 2,
+      "attack": 3,
+      "agility": 2,
+      "hull": 3,
+      "shield": 2,
+      "upgrades": [ "Torpedo", "Astromech" ],
+      "points": 21
+    },
+    {
+      "name": "academypilot",
+      "faction": "imperial",
+      "ship": "tiefighter",
+      "skill": 1,
+      "attack": 2,
+      "agility": 3,
+      "hull": 3,
+      "shield": 0,
+      "upgrades": [ ],
+      "points": 12
+    }
+  ]
+}

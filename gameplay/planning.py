@@ -1,6 +1,6 @@
-class Combat:
+class Planning:
     """
-    This class represents the Combat phase of a turn
+    This class represents the Planning phase of a turn
     """
     def __init__(self, game):
         """
@@ -11,6 +11,6 @@ class Combat:
 
     def execute(self):
         """
-        Run the Combat phase
+        Run the Planning phase
         """
         pass

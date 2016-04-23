@@ -1,6 +1,6 @@
-class Combat:
+class Cleanup:
     """
-    This class represents the Combat phase of a turn
+    This represents the Cleanup phase of the game
     """
     def __init__(self, game):
         """
@@ -11,6 +11,6 @@ class Combat:
 
     def execute(self):
         """
-        Run the Combat phase
+        Run the Cleanup phase
         """
         pass

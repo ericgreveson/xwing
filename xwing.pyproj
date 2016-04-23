@@ -18,7 +18,8 @@
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <Environment>TCL_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tcl8.6
 TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Environment>
-    <CommandLineArguments>data/basic_board_setup.json</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,13 +45,62 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="actions\target_lock.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="actions\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\activation.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\cleanup.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\combat.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\game_thread.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\planning.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\console_player.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\setup.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\turn.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\bearing.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\bearing_registry.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\board.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\faction.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\game.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\large_ship.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\maneuver.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\movement_template.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\pilot.py" />
+    <Compile Include="models\pilot_registry.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\ship.py">
@@ -62,10 +112,7 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="models\small_ship.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\tie_fighter.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="models\x_wing.py">
+    <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ui\board_renderer.py">
@@ -77,6 +124,18 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="ui\ship_renderer.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ui\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="upgrades\astromech.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="upgrades\torpedo.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="upgrades\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="xwing.py" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +143,8 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Folder Include="images\" />
     <Folder Include="models\" />
     <Folder Include="actions\" />
+    <Folder Include="gameplay\" />
+    <Folder Include="upgrades\" />
     <Folder Include="ui\" />
   </ItemGroup>
   <ItemGroup>
@@ -100,8 +161,15 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     </Interpreter>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\basic_board_setup.json" />
-    <Content Include="images\death_star_mat.jpg" />
+    <Content Include="data\example_rebel_squad.setup.json" />
+    <Content Include="data\example_imperial_squad.setup.json" />
+    <Content Include="data\example_imperial_squad.xws.json" />
+    <Content Include="data\example_rebel_squad.xws.json" />
+    <Content Include="data\pilot_registry.json" />
+    <Content Include="data\ship_registry.json" />
+    <Content Include="images\death_star_mat.png" />
+    <Content Include="images\tiefighter_pilot_token.png" />
+    <Content Include="images\xwing_pilot_token.png" />
     <Content Include="LICENSE" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />

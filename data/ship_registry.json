@@ -1,24 +1,26 @@
 {
   "ship_types": [
     {
-      "name": "XWing",
+      "name": "xwing",
       "class": "SmallShip",
       "faction": "rebel",
       "actions": [ "Focus", "TargetLock" ],
-      "attack": 3,
-      "agility": 2,
-      "hull": 3,
-      "shield": 2
+      "dial": {
+        "green": [ "LeftBank1", "Straight1", "RightBank1", "Straight2" ],
+        "white": [ "LeftTurn2", "LeftBank2", "RightBank2", "RightTurn2", "LeftTurn3", "LeftBank3", "Straight3", "RightBank3", "RightTurn3", "Straight4"],
+        "red": [ "KTurn4" ]
+      }
     },
     {
-      "name": "TIEFighter",
+      "name": "tiefighter",
       "class": "SmallShip",
       "faction": "imperial",
       "actions": [ "Focus", "BarrelRoll", "Evade" ],
-      "attack": 2,
-      "agility": 3,
-      "hull": 3,
-      "shield": 0
+      "dial": {
+        "green": [ "LeftBank2", "Straight2", "RightBank2", "Straight3" ],
+        "white": [ "LeftTurn1", "RightTurn1", "LeftTurn2", "RightTurn2", "LeftTurn3", "LeftBank3", "RightBank3", "RightTurn3", "Straight4", "Straight5"],
+        "red": [ "KTurn3", "KTurn4" ]
+      }
     }
   ]
 }

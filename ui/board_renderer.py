@@ -1,4 +1,4 @@
-from ui.ship_renderer import ShipRenderer
+from ui.pilot_renderer import PilotRenderer
 
 import cairo
 import os
@@ -19,17 +19,17 @@ class BoardRenderer:
         # Load the board background image
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self._board_surface = cairo.ImageSurface.create_from_png(os.path.join(current_dir, BOARD_IMAGE))
-
-        # Create sub-renderers
+        
         self._sub_renderers = []
-        for ship in self._board.ships:
-            self._sub_renderers.append(ShipRenderer(ship))
+        self._refresh_sub_renderers()
 
     def render(self, context):
         """
         Render the board
         context: The Cairo context to render to
         """
+        self._refresh_sub_renderers()
+
         context.save()
 
         # Draw the board
@@ -47,3 +47,13 @@ class BoardRenderer:
             sub_renderer.render(context)
 
         context.restore()
+
+    def _refresh_sub_renderers(self):
+        """
+        Recreate sub-renderers, e.g. if the board contents have changed
+        """
+        if len(self._sub_renderers) != len(self._board.pilots):
+            # Create sub-renderers
+            self._sub_renderers = []
+            for pilot in self._board.pilots:
+                self._sub_renderers.append(PilotRenderer(pilot))

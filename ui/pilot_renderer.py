@@ -4,26 +4,26 @@ import cairo
 import math
 import os
 
-class ShipRenderer:
+class PilotRenderer:
     """
-    Renderer for drawing ship pilot tokens
+    Renderer for drawing pilot tokens
     """
-    def __init__(self, ship):
+    def __init__(self, pilot):
         """
         Constructor
-        ship: The ship to render
+        pilot: The pilot to render
         """
         # Load the token image
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        pilot_token_image = self._get_pilot_token_image(ship)
+        pilot_token_image = self._get_pilot_token_image(pilot)
         pilot_token_surface = cairo.ImageSurface.create_from_png(os.path.join(current_dir, pilot_token_image))
 
         # Compute the pattern scaling
         sw, sh = pilot_token_surface.get_width(), pilot_token_surface.get_height()
-        bw, bh = ship.base_size
+        bw, bh = pilot.ship.base_size
 
         # Set members
-        self._ship = ship
+        self._ship = pilot.ship
         self._base_color_rgba = self._get_base_color()
         self._pilot_token_surface_pattern = cairo.SurfacePattern(pilot_token_surface)
         self._pilot_token_surface_pattern.set_matrix(cairo.Matrix(xx=sw/bw, yy=-sh/bh, x0=sw/2, y0=sh/2))
@@ -63,13 +63,13 @@ class ShipRenderer:
         else:
             raise ValueError("Unexpected faction: {0}".format(self._ship.faction))
 
-    def _get_pilot_token_image(self, ship):
+    def _get_pilot_token_image(self, pilot):
         """
-        Get the pilot token image for a given ship
-        ship: The ship to get the pilot token image for
+        Get the pilot token image for a given pilot
+        pilot: The pilot to get the pilot token image for
         """
         script_path = os.path.dirname(os.path.abspath(__file__))
-        image_file = os.path.join(script_path, "..", "images", "{0}_pilot_token.png".format(ship.name))
+        image_file = os.path.join(script_path, "..", "images", "{0}_pilot_token.png".format(pilot.name))
         if not os.path.exists(image_file):
             raise ValueError("No pilot token image: {0}".format(image_file))
 

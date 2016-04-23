@@ -57,3 +57,14 @@ class BearingRegistry(Enum):
     RightTRoll1 = Bearing(MovementTemplate(MovementTemplate.Type.Turn, MovementTemplate.Direction.Right, 1), 90)
     RightTRoll2 = Bearing(MovementTemplate(MovementTemplate.Type.Turn, MovementTemplate.Direction.Right, 2), 90)
     RightTRoll3 = Bearing(MovementTemplate(MovementTemplate.Type.Turn, MovementTemplate.Direction.Right, 3), 90)
+
+    @staticmethod
+    def bearing_from_string(bearing_name):
+        """
+        Get a bearing from its string name
+        """
+        for bearing in BearingRegistry:
+            if bearing.name == bearing_name:
+                return bearing
+
+        raise ValueError("Unknown bearing: {0}".format(bearing_name))

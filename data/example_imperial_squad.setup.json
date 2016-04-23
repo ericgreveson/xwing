@@ -1,0 +1,14 @@
+{
+  "imperial": [
+    {
+      "pilot": "academypilot",
+      "position": [ 40, 40 ],
+      "orientation": 0
+    },
+    {
+      "pilot": "academypilot",
+      "position": [ 100, 40 ],
+      "orientation": 0
+    }
+  ]
+}

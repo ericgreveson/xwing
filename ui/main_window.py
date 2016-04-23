@@ -1,7 +1,3 @@
-from models.bearing_registry import BearingRegistry
-from models.faction import Faction
-from models.maneuver import Maneuver
-
 from ui.board_renderer import BoardRenderer
 
 import cairo
@@ -15,6 +11,8 @@ class MainWindow(tk.Frame):
     board: Game board to represent
     master: Parent widget
     """
+    REFRESH_DELAY = 200
+
     def __init__(self, board, master=None):
         """
         Constructor
@@ -36,34 +34,12 @@ class MainWindow(tk.Frame):
         self._board_renderer = BoardRenderer(self._board)
 
         # Do the initial draw
-        self._bearings = [
-            BearingRegistry.Straight1,
-            BearingRegistry.LeftBank1,
-            BearingRegistry.Straight2,
-            BearingRegistry.RightBank1,
-            None,
-            BearingRegistry.LeftTurn3,
-            None,
-            BearingRegistry.RightTurn2,
-            None,
-            BearingRegistry.Straight3,
-            BearingRegistry.LeftSLoop2,
-            BearingRegistry.KTurn4]
-        self._bearings.reverse()
         self._redraw_callback()
 
     def _redraw_callback(self):
         """
         Redraw the window
         """
-        # Move the first ship
-        if self._bearings:
-            bearing = self._bearings.pop()
-            if bearing:
-                first_imperial = [ship for ship in self._board.ships if ship.faction == Faction.imperial][0]
-                movement = Maneuver(bearing.value)
-                movement.apply(first_imperial)
-
         # Create or update rendering surface
         edge_size = 720
         self._update_surface(edge_size)
@@ -77,7 +53,7 @@ class MainWindow(tk.Frame):
         self._label["image"] = self._wrapped_image
         
         # Repeat ad infinitum
-        self.after(500, self._redraw_callback)
+        self.after(MainWindow.REFRESH_DELAY, self._redraw_callback)
 
     def _update_surface(self, edge_size):
         """
