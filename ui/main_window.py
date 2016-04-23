@@ -1,5 +1,6 @@
+from models.bearing_registry import BearingRegistry
 from models.faction import Faction
-from models.movement_template import MovementTemplate
+from models.maneuver import Maneuver
 
 from ui.board_renderer import BoardRenderer
 
@@ -35,19 +36,20 @@ class MainWindow(tk.Frame):
         self._board_renderer = BoardRenderer(self._board)
 
         # Do the initial draw
-        Dir = MovementTemplate.Direction
-        self._movements = [
-            MovementTemplate(Dir.Straight, 1),
-            MovementTemplate(Dir.LeftBank, 1),
-            MovementTemplate(Dir.Straight, 2),
-            MovementTemplate(Dir.RightBank, 1),
+        self._bearings = [
+            BearingRegistry.Straight1,
+            BearingRegistry.LeftBank1,
+            BearingRegistry.Straight2,
+            BearingRegistry.RightBank1,
             None,
-            MovementTemplate(Dir.LeftTurn, 3),
+            BearingRegistry.LeftTurn3,
             None,
-            MovementTemplate(Dir.RightTurn, 2),
+            BearingRegistry.RightTurn2,
             None,
-            MovementTemplate(Dir.Straight, 3)]
-        self._movements.reverse()
+            BearingRegistry.Straight3,
+            BearingRegistry.LeftSLoop2,
+            BearingRegistry.KTurn4]
+        self._bearings.reverse()
         self._redraw_callback()
 
     def _redraw_callback(self):
@@ -55,10 +57,11 @@ class MainWindow(tk.Frame):
         Redraw the window
         """
         # Move the first ship
-        if self._movements:
-            movement = self._movements.pop()
-            if movement:
+        if self._bearings:
+            bearing = self._bearings.pop()
+            if bearing:
                 first_imperial = [ship for ship in self._board.ships if ship.faction == Faction.imperial][0]
+                movement = Maneuver(bearing.value)
                 movement.apply(first_imperial)
 
         # Create or update rendering surface

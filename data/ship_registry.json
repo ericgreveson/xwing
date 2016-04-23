@@ -1,0 +1,24 @@
+{
+  "ship_types": [
+    {
+      "name": "XWing",
+      "class": "SmallShip",
+      "faction": "rebel",
+      "actions": [ "Focus", "TargetLock" ],
+      "attack": 3,
+      "agility": 2,
+      "hull": 3,
+      "shield": 2
+    },
+    {
+      "name": "TIEFighter",
+      "class": "SmallShip",
+      "faction": "imperial",
+      "actions": [ "Focus", "BarrelRoll", "Evade" ],
+      "attack": 2,
+      "agility": 3,
+      "hull": 3,
+      "shield": 0
+    }
+  ]
+}

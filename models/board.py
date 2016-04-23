@@ -1,6 +1,5 @@
 from models.faction import Faction
 from models.movement_template import MovementTemplate
-from models.ship_registry import ShipRegistry
 
 import json
 
@@ -17,10 +16,11 @@ class Board:
         self.dimensions = (board_size, board_size)
         self.ships = []
 
-    def load_board_setup(self, json_file):
+    def load_board_setup(self, json_file, ship_registry):
         """
         Load the initial board setup from file
         json_file: The JSON file name to load the setup from
+        ship_registry: The ShipRegistry to use for creating ships
         Format:
         {
           "players": {
@@ -42,8 +42,6 @@ class Board:
           }
         }
         """
-        ship_registry = ShipRegistry()
-
         factions = set()
         with open(json_file) as f:
             data = json.load(f)
@@ -55,8 +53,7 @@ class Board:
 
                 for ship in ships:
                     # Get the type of ship and make one
-                    ship_class = ship_registry.ship_class_from_string(ship["ship"])
-                    ship_instance = ship_class()
+                    ship_instance = ship_registry.create(ship["ship"])
 
                     # Check its faction matches
                     if ship_instance.faction != faction:

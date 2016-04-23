@@ -80,6 +80,7 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="xwing.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="data\" />
     <Folder Include="images\" />
     <Folder Include="models\" />
     <Folder Include="actions\" />
@@ -99,6 +100,7 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     </Interpreter>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\basic_board_setup.json" />
     <Content Include="images\death_star_mat.jpg" />
     <Content Include="LICENSE" />
     <Content Include="README.md" />

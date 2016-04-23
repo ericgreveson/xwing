@@ -1,6 +1,4 @@
 from models.faction import Faction
-from models.tie_fighter import TieFighter
-from models.x_wing import XWing
 
 import cairo
 import math
@@ -70,9 +68,9 @@ class ShipRenderer:
         Get the pilot token image for a given ship
         ship: The ship to get the pilot token image for
         """
-        if isinstance(ship, XWing):
-            return "../images/x_wing_pilot_token.png"
-        elif isinstance(ship, TieFighter):
-            return "../images/tie_fighter_pilot_token.png"
-        else:
-            raise ValueError("Unknown ship type")
+        script_path = os.path.dirname(os.path.abspath(__file__))
+        image_file = os.path.join(script_path, "..", "images", "{0}_pilot_token.png".format(ship.name))
+        if not os.path.exists(image_file):
+            raise ValueError("No pilot token image: {0}".format(image_file))
+
+        return image_file

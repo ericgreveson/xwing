@@ -9,12 +9,12 @@
     ],
     "imperial": [
       {
-        "ship": "TieFighter",
+        "ship": "TIEFighter",
         "position": [ 40, 40 ],
         "orientation": 0
       },
       {
-        "ship": "TieFighter",
+        "ship": "TIEFighter",
         "position": [ 100, 40 ],
         "orientation": 0
       }

@@ -2,24 +2,28 @@ class Ship:
     """
     This represents a ship model (small or large)
     """
-    def __init__(self, actions, attack, agility, max_hull, max_shield):
+    def __init__(self, name, faction, actions, attack, agility, hull, shield):
         """
         Constructor
+        name: The name of the ship
+        faction: The faction that the ship belongs to
         actions: List of actions that the ship can perform by default
         attack: Default attack strength of primary weapon
         agility: Ship's agility (evade-ness)
-        max_hull: Maximum (and initial) hull for this ship
-        max_shield: Maximum (and initial) shield for this ship
+        hull: Hull for this ship
+        shield: Maximum (and initial) shield for this ship
         """
         # Set up properties
+        self.name = name
+        self.faction = faction
         self.actions = actions
         self.attack = attack
         self.agility = agility
-        self.hull = max_hull
-        self.max_shield = max_shield
+        self.hull = hull
+        self.max_shield = shield
 
         # And our initial health
-        self.shield = max_shield
+        self.shield = shield
         self.damage = []
 
         # Set initial position of the ship centre
