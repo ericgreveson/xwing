@@ -28,15 +28,60 @@ class Pilot:
         self.upgrades = upgrades
         self._points = points
 
+        # And our active status
+        self.active = False
+
         # And our initial health
         self.shield = shield
         self.damage_cards = []
+
+        # And token counts
+        self._stress = 0
+        self._focus = 0
+        self._evade = 0
 
     def total_points(self):
         """
         Get the total squad points for this pilot with its upgrades
         """
         return self._points + sum([upgrade.points for upgrade in self.upgrades])
+
+    def adjust_stress(self, delta):
+        """
+        Add or remove stress tokens to/from this pilot
+        delta: Number of stress tokens to add
+        """
+        prev_stress = self._stress
+        self._stress += delta
+        self._stress = max(0, self._stress)
+        if prev_stress != self._stress:
+            print("Pilot {0} now has {1} stress".format(self.name, self._stress))
+
+    def clean_up(self):
+        """
+        Perform clean-up phase actions for this pilot
+        """
+        self._focus = 0
+        self._evade = 0
+
+    def available_actions(self):
+        """
+        Get a list of currently available actions for this pilot
+        """
+        # TODO: pilot abilities, upgrades, ...
+        return self.ship.actions
+
+    def can_perform_action(self):
+        """
+        Return True if this pilot can perform an action, False otherwise
+        """
+        return self.available_actions() and not self.is_stressed()
+
+    def is_stressed(self):
+        """
+        Is this pilot stressed?
+        """
+        return self._stress > 0
 
     def is_alive(self):
         """

@@ -23,8 +23,7 @@ class PilotRenderer:
         bw, bh = pilot.ship.base_size
 
         # Set members
-        self._ship = pilot.ship
-        self._base_color_rgba = self._get_base_color()
+        self._pilot = pilot
         self._pilot_token_surface_pattern = cairo.SurfacePattern(pilot_token_surface)
         self._pilot_token_surface_pattern.set_matrix(cairo.Matrix(xx=sw/bw, yy=-sh/bh, x0=sw/2, y0=sh/2))
         
@@ -36,14 +35,14 @@ class PilotRenderer:
         context.save()
 
         # Get the ship's base size and position
-        w, h = self._ship.base_size
-        x, y = self._ship.position
+        w, h = self._pilot.ship.base_size
+        x, y = self._pilot.ship.position
 
         # Move to the ship's position on the board
         context.translate(x, y)
-        context.rotate(math.radians(self._ship.orientation))
+        context.rotate(math.radians(self._pilot.ship.orientation))
         context.rectangle(-w/2, -h/2, w, h)
-        context.set_source_rgba(*self._base_color_rgba)
+        context.set_source_rgba(*self._get_base_color())
         context.fill()
         context.rectangle(-w/2, -h/2, w, h)
         context.set_source(self._pilot_token_surface_pattern)
@@ -52,16 +51,18 @@ class PilotRenderer:
         
     def _get_base_color(self):
         """
-        Get the base color from the ship's faction
+        Get the base color from the ship's faction (or if it's active)
         """
-        if self._ship.faction == Faction.rebel:
+        if self._pilot.active:
+            return (0, 1, 1, 1)
+        elif self._pilot.faction == Faction.rebel:
             return (1, 0, 0, 1)
-        elif self._ship.faction == Faction.imperial:
+        elif self._pilot.faction == Faction.imperial:
             return (0, 1, 0, 1)
-        elif self._ship.faction == Faction.scum:
+        elif self._pilot.faction == Faction.scum:
             return (1, 1, 0, 1)
         else:
-            raise ValueError("Unexpected faction: {0}".format(self._ship.faction))
+            raise ValueError("Unexpected faction: {0}".format(self._pilot.faction))
 
     def _get_pilot_token_image(self, pilot):
         """

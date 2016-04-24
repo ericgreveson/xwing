@@ -5,7 +5,8 @@ from enum import Enum
 
 class BearingRegistry(Enum):
     """
-    List of all bearings that can be used for maneuvers etc
+    List of all named bearings that can be used for maneuvers etc
+    We refer to each of these as a "named bearing" (as opposed to Bearing, which is the value)
     """
     # Straight bearings
     Straight1 = Bearing(MovementTemplate(MovementTemplate.Type.Straight, MovementTemplate.Direction.Straight, 1))
@@ -59,12 +60,12 @@ class BearingRegistry(Enum):
     RightTRoll3 = Bearing(MovementTemplate(MovementTemplate.Type.Turn, MovementTemplate.Direction.Right, 3), 90)
 
     @staticmethod
-    def bearing_from_string(bearing_name):
+    def named_bearing_from_string(bearing_name):
         """
-        Get a bearing from its string name
+        Get a named bearing from its string name
         """
-        for bearing in BearingRegistry:
-            if bearing.name == bearing_name:
-                return bearing
+        for named_bearing in BearingRegistry:
+            if named_bearing.name == bearing_name:
+                return named_bearing
 
         raise ValueError("Unknown bearing: {0}".format(bearing_name))

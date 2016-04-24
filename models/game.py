@@ -1,3 +1,5 @@
+import functools
+
 class Game:
     """
     Model for a complete X-Wing game
@@ -24,9 +26,28 @@ class Game:
                 return player
 
         raise ValueError("Given faction is not playing!")
-
+    
     def is_over(self):
         """
         Is the game over?
         """
         return not all([player.is_alive() for player in self.players])
+
+    def pilots_by_skill(self, ascending = True):
+        """
+        Get list of all pilots, sorted by activation order
+        ascending: If True, sort in ascending order (e.g. Activation), otherwise descending (e.g. Combat)
+        return: List of pilots, with skill ties broken by initiative first
+        """
+        return sorted(self.board.pilots,
+                      key=functools.partial(self._skill_sort_key, initiative_multiplier = 1 if ascending else -1),
+                      reverse=not ascending)
+
+    def _skill_sort_key(self, pilot, initiative_multiplier):
+        """
+        Generate a numeric key for sorting pilots in activation order
+        pilot: The pilot to generate the key for
+        initiative_multiplier: The initiative bonus multiplier (1 for Activation order, -1 for Combat order)
+        """
+        skill_bonus = 0 if self.player(pilot.faction).has_initiative else 0.5
+        return pilot.skill + initiative_multiplier * skill_bonus

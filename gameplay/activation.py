@@ -19,19 +19,16 @@ class Activation:
         """
         Run the Activation phase
         """
-        pilots_in_activation_order = sorted(self._game.board.pilots, key=self._activation_order_sort_key)
-        for pilot in pilots_in_activation_order:
-            # Ask the pilot's player what to do
-            bearing = self._game.player(pilot.faction).choose_dial(pilot)
+        for pilot in self._game.pilots_by_skill():
+            pilot.active = True
 
-            # Apply the maneuver
-            movement = Maneuver(bearing.value)
-            movement.apply(pilot.ship)
+            # Apply this pilot's maneuver
+            pilot.chosen_maneuver.apply(pilot)
 
-    def _activation_order_sort_key(self, pilot):
-        """
-        Generate a numeric key for sorting pilots in activation order
-        pilot: The pilot to generate the key for
-        """
-        skill_bonus = 0 if self._game.player(pilot.faction).has_initiative else 0.5
-        return pilot.skill + skill_bonus
+            # Choose an action to perform
+            if pilot.can_perform_action():
+                chosen_action = self._game.player(pilot.faction).choose_action(pilot)
+
+                # TODO: Do something with this
+
+            pilot.active = False

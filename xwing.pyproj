@@ -30,6 +30,9 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="actions\action_registry.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="actions\barrel_roll.py">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +91,9 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\dial.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\difficulty.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\faction.py">

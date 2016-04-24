@@ -13,4 +13,5 @@ class Cleanup:
         """
         Run the Cleanup phase
         """
-        pass
+        for pilot in self._game.board.pilots:
+            pilot.clean_up()

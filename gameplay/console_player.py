@@ -1,3 +1,4 @@
+from actions.action_registry import ActionRegistry
 from gameplay.player import Player
 from models.bearing_registry import BearingRegistry
 from models.faction import Faction
@@ -50,14 +51,57 @@ class ConsolePlayer(Player):
 
     def choose_dial(self, pilot):
         """
-        Return a Bearing from the given pilot's ship's dial
+        Return a Maneuver from the given pilot's ship's dial
         """
-        bearing_names = [bearing.name for bearing, difficulty in pilot.ship.dial.bearings()]
+        bearing_names = [maneuver.named_bearing().name for maneuver in pilot.ship.dial.maneuvers()]
         print("Green: {0}".format(", ".join([bearing.name for bearing in pilot.ship.dial.green])))
         print("White: {0}".format(", ".join([bearing.name for bearing in pilot.ship.dial.white])))
         print("Red:   {0}".format(", ".join([bearing.name for bearing in pilot.ship.dial.red])))
         bearing_name = self._get_answer("Choose bearing for {0}:".format(pilot.name), bearing_names, show_options=False)
-        return BearingRegistry.bearing_from_string(bearing_name)
+        chosen_named_bearing = BearingRegistry.named_bearing_from_string(bearing_name)
+        return pilot.ship.dial.maneuver_from_named_bearing(chosen_named_bearing)
+    
+    def choose_action(self, pilot):
+        """
+        Return an action from the given pilot's available_actions(), or None if no action requested
+        """
+        action_names = [action.__name__ for action in pilot.available_actions()]
+        if not action_names:
+            return None
+
+        action_names += ["None"]
+        action_name = self._get_answer("Choose action for {0}:".format(pilot.name), action_names)
+        if action_name == "None":
+            return None
+        else:
+            # TODO: allow for selecting parameters other than the pilot, e.g. target locks and barrel roll/boost direction
+            # Maybe in separate calls when action is executed, in case chosen action is invalid and they need to select again?
+            action_class = ActionRegistry.action_class_from_string(action_name)
+            return action_class()
+        
+    def choose_attack_target(self, pilot, target_options):
+        """
+        Return a target from the available targets, or None if no attack requested
+        pilot: The pilot doing the attacking
+        target_options: List of enemy pilots who are in range of at least one weapon
+        """
+        print("0: None")
+        for target_index, target in enumerate(target_options):
+            print("{0}: {1}".format(target_index + 1, target.name))
+        chosen_index = int(self._get_answer("Choose target for {0}".format(pilot.name), [str(i) for i in range(len(target_options) + 1)]))
+        if chosen_index == 0:
+            return None
+        else:
+            return target_options[chosen_index - 1]
+
+    def choose_attack_weapon(self, pilot, target, weapon_options):
+        """
+        Return a weapon to attack the given target with out of the available options
+        pilot: The pilot doing the attacking
+        target: The enemy pilot being attacked
+        weapon_options: The list of weapons that can be chosen
+        """
+        raise NotImplementedError()
 
     def _get_answer(self, question_text, valid_responses, show_options=True):
         """

@@ -1,3 +1,5 @@
+from models.difficulty import Difficulty
+
 import math
 import numpy as np
 
@@ -5,19 +7,41 @@ class Maneuver:
     """
     Apply a bearing to move a ship
     """
-    def __init__(self, bearing):
+    def __init__(self, named_bearing, difficulty):
         """
         Constructor
-        bearing: The bearing to use for this maneuver
+        named_bearing: The named bearing to use for this maneuver
+        difficulty: The Difficulty of this maneuver
         """
-        self._bearing = bearing
+        self._named_bearing = named_bearing
+        self._difficulty = difficulty
         
-    def apply(self, ship):
+    def named_bearing(self):
         """
-        Apply this maneuver to the given ship
+        Get the bearing of this maneuver
         """
-        # Unpack bearing bits
-        template = self._bearing.template
+        return self._named_bearing
+
+    def difficulty(self):
+        """
+        Get the difficulty of this maneuver
+        """
+        return self._difficulty
+
+    def apply(self, pilot):
+        """
+        Apply this maneuver to the given pilot
+        pilot: The pilot to apply the maneuver to
+        return: False if the maneuver is not allowed, True otherwise
+        """
+        # Alias some things for brevity
+        ship = pilot.ship
+        bearing = self._named_bearing.value
+        template = bearing.template
+
+        # Is this maneuver valid?
+        if self._difficulty == Difficulty.red and pilot.is_stressed():
+            return False
 
         # Translate the ship
         ship_dir = Maneuver._direction_vector(ship.orientation)
@@ -28,8 +52,15 @@ class Maneuver:
         ship.position = list(new_ship_midpoint)
 
         # Rotate the ship
-        ship.orientation += template.rotation_angle() + self._bearing.extra_rotation
+        ship.orientation += template.rotation_angle() + bearing.extra_rotation
         ship.orientation = Maneuver._wrap_angle_range(ship.orientation)
+
+        # Stress the ship, or remove stress tokens, if necessary
+        if self._difficulty == Difficulty.green:
+            pilot.adjust_stress(-1)
+        elif self._difficulty == Difficulty.red:
+            pilot.adjust_stress(1)
+        return True
 
     @staticmethod
     def _direction_vector(angle):

@@ -1,8 +1,4 @@
-from actions.barrel_roll import BarrelRoll
-from actions.boost import Boost
-from actions.evade import Evade
-from actions.focus import Focus
-from actions.target_lock import TargetLock
+from actions.action_registry import ActionRegistry
 
 from models.bearing_registry import BearingRegistry
 from models.dial import Dial
@@ -17,7 +13,6 @@ class ShipRegistry:
     Registry of ship classes
     """
     SHIP_CLASSES = [SmallShip, LargeShip]
-    ACTIONS = [BarrelRoll, Boost, Evade, Focus, TargetLock]
 
     class ShipPrototype:
         """
@@ -38,14 +33,14 @@ class ShipRegistry:
                 name = ship_type["name"]
 
                 ship_dial = ship_type["dial"]
-                green = [BearingRegistry.bearing_from_string(bearing_name) for bearing_name in ship_dial["green"]]
-                white = [BearingRegistry.bearing_from_string(bearing_name) for bearing_name in ship_dial["white"]]
-                red = [BearingRegistry.bearing_from_string(bearing_name) for bearing_name in ship_dial["red"]]
+                green = [BearingRegistry.named_bearing_from_string(bearing_name) for bearing_name in ship_dial["green"]]
+                white = [BearingRegistry.named_bearing_from_string(bearing_name) for bearing_name in ship_dial["white"]]
+                red = [BearingRegistry.named_bearing_from_string(bearing_name) for bearing_name in ship_dial["red"]]
 
                 prototype = ShipRegistry.ShipPrototype()
                 prototype.ship_class = ShipRegistry._ship_class_from_string(ship_type["class"])
                 prototype.faction = Faction[ship_type["faction"]]
-                prototype.actions = [ShipRegistry._action_from_string(action_name) for action_name in ship_type["actions"]]
+                prototype.actions = [ActionRegistry.action_class_from_string(action_name) for action_name in ship_type["actions"]]
                 prototype.dial = Dial(green, white, red)
 
                 # Place in the registry
@@ -76,14 +71,3 @@ class ShipRegistry:
                 return ship_class
 
         raise ValueError("Unknown ship class: {0}".format(ship_class_name))
-
-    @staticmethod
-    def _action_from_string(action_name):
-        """
-        Get an action class from its string name
-        """
-        for action in ShipRegistry.ACTIONS:
-            if action.__name__ == action_name:
-                return action
-
-        raise ValueError("Unknown action: {0}".format(action_name))
