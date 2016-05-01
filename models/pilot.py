@@ -1,3 +1,5 @@
+from models.weapon import PrimaryWeapon
+
 class Pilot:
     """
     This represents a pilot
@@ -34,6 +36,9 @@ class Pilot:
         # And our initial health
         self.shield = shield
         self.damage_cards = []
+
+        # And weapons
+        self.primary_weapon = PrimaryWeapon()
 
         # And token counts
         self._stress = 0
@@ -83,8 +88,37 @@ class Pilot:
         """
         return self._stress > 0
 
+    def damage_count(self):
+        """
+        Count how much damage (including double-damage cards) this pilot has
+        """
+        return sum([damage_card.value for damage_card in self.damage_cards])
+
     def is_alive(self):
         """
         Figure out if this ship's damage cards exceed its hull
         """
-        return sum([damage_card.value for damage_card in self.damage_cards]) < self.hull
+        return self.damage_count() < self.hull
+    
+    def weapon_options(self):
+        """
+        Get the list of weapons that can be used by this pilot
+        return: List of Weapon options to attack with (upgrades and/or primary weapon)
+        """
+        return [self.primary_weapon]
+    
+    def attack_bonus(self, attack_range):
+        """
+        Compute any attack bonus from range when attacking
+        attack_range: The range (1, 2 or 3) of the attack
+        return: Integer bonus, or 0 if no bonus
+        """
+        return self.primary_weapon.attack_bonus(attack_range)
+
+    def agility_bonus(self, attack_range):
+        """
+        Compute any agility bonus when being attacked
+        attack_range: The range (1, 2 or 3) of the attack
+        return: Integer bonus, or 0 if no bonus
+        """
+        return 1 if attack_range > 2 else 0

@@ -78,7 +78,18 @@ class ConsolePlayer(Player):
             # Maybe in separate calls when action is executed, in case chosen action is invalid and they need to select again?
             action_class = ActionRegistry.action_class_from_string(action_name)
             return action_class()
-        
+
+    def choose_attack_weapon(self, pilot, weapon_options):
+        """
+        Return a weapon to attack the given target with out of the available options
+        pilot: The pilot doing the attacking
+        weapon_options: The list of weapons that can be chosen
+        """
+        for weapon_index, weapon in enumerate(weapon_options):
+            print("{0}: {1}".format(weapon_index, weapon.name))
+        chosen_index = int(self._get_answer("Choose weapon for {0}".format(pilot.name), [str(i) for i in range(len(weapon_options))]))
+        return weapon_options[chosen_index]
+
     def choose_attack_target(self, pilot, target_options):
         """
         Return a target from the available targets, or None if no attack requested
@@ -93,15 +104,6 @@ class ConsolePlayer(Player):
             return None
         else:
             return target_options[chosen_index - 1]
-
-    def choose_attack_weapon(self, pilot, target, weapon_options):
-        """
-        Return a weapon to attack the given target with out of the available options
-        pilot: The pilot doing the attacking
-        target: The enemy pilot being attacked
-        weapon_options: The list of weapons that can be chosen
-        """
-        raise NotImplementedError()
 
     def _get_answer(self, question_text, valid_responses, show_options=True):
         """

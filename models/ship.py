@@ -1,3 +1,6 @@
+from shapely.geometry import box
+from shapely.affinity import rotate, translate
+
 class Ship:
     """
     This represents a ship model (small or large)
@@ -19,3 +22,14 @@ class Ship:
         # Set initial position of the ship centre
         self.position = (0, 0)
         self.orientation = 0 # degrees
+
+    def get_base_shape(self):
+        """
+        Get the base shape of this ship, in board coordinates
+        return: Polygon representing this ship
+        """
+        bx = self.base_size[0] / 2
+        by = self.base_size[1] / 2
+        base_shape = box(-bx, -by, bx, by)
+        base_shape = rotate(base_shape, self.orientation)
+        return translate(base_shape, self.position[0], self.position[1])

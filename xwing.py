@@ -41,7 +41,10 @@ def main(argv):
     # Build the UI and set it running
     root = tk.Tk()
     app = MainWindow(board, master=root)
-    app.mainloop()
+    try:
+        app.mainloop()
+    except KeyboardInterrupt:
+        pass
 
     # Once the main window is closed, join the game thread
     game_thread.join()

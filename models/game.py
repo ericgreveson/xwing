@@ -1,3 +1,5 @@
+from models.damage_card import DamageCard
+
 import functools
 
 class Game:
@@ -15,6 +17,9 @@ class Game:
         self.players = players
         self.pilot_registry = pilot_registry
 
+        # TODO: fix up to be real damage cards
+        self.damage_cards = [DamageCard() for index in range(32)]
+
     def player(self, faction):
         """
         Get the player for the given faction
@@ -26,6 +31,16 @@ class Game:
                 return player
 
         raise ValueError("Given faction is not playing!")
+
+    def other_player(self, faction):
+        """
+        Get the player that isn't the given faction
+        faction: The faction of player A
+        return: The player that isn't player A (i.e. player B)
+        """
+        for player in self.players:
+            if player.faction != faction:
+                return player
     
     def is_over(self):
         """

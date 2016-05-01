@@ -102,6 +102,9 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="models\game.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\geometry.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\large_ship.py">
       <SubType>Code</SubType>
     </Compile>
