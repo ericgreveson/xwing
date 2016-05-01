@@ -9,8 +9,8 @@ class DamageCard:
         self.faceup = False
         self.value = 1
 
-    def flip_faceup():
+    def flip_faceup(self):
         """
         Flip this damage card faceup
         """
-        pass
+        self.faceup = True

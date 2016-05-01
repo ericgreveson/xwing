@@ -79,21 +79,23 @@ class Combat:
         # Roll green dice
         defence_strength = target.agility + target.agility_bonus(attack_range)
         green_dice = [GreenDie.roll() for die_index in range(defence_strength)]
-        print("Green dice results: {0}".format(", ".join(red_dice)))
+        print("Green dice results: {0}".format(", ".join(green_dice)))
 
         # Cancel red dice with green dice: damage first, then crits
         evades = sum([1 if die == GreenDie.EVADE else 0 for die in green_dice])
         final_red_dice = []
         for die in red_dice:
-            if die == RedDie.DAMAGE and evades > 0:
-                evades -= 1
-            else:
-                final_red_dice.append(die)
+            if die == RedDie.DAMAGE:
+                if evades > 0:
+                    evades -= 1
+                else:
+                    final_red_dice.append(die)
         for die in red_dice:
-            if die == RedDie.CRIT and evades > 0:
-                evades -= 1
-            else:
-                final_red_dice.append(die)
+            if die == RedDie.CRIT:
+                if evades > 0:
+                    evades -= 1
+                else:
+                    final_red_dice.append(die)
 
         # Deal damage!
         damage_count = sum([1 if die == RedDie.DAMAGE else 0 for die in final_red_dice])
@@ -121,5 +123,5 @@ class Combat:
                 target.damage_count(),
                 target.hull))
         else:
-            print("{0} has killed {1}!".format(pilot.name, target.name))
+            print("{0} has killed {1} with {2} damage and {3} crits!".format(pilot.name, target.name, damage_count, crit_count))
             self._game.board.pilots.remove(target)
