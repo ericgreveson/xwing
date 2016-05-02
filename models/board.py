@@ -10,3 +10,6 @@ class Board:
         board_size = 914
         self.dimensions = (board_size, board_size)
         self.pilots = []
+
+        # Footprints to display
+        self.footprints = []

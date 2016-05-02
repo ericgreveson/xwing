@@ -54,10 +54,16 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="gameplay\activation.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="gameplay\red_die.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="gameplay\cleanup.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="gameplay\combat.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="gameplay\green_die.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="gameplay\game_thread.py">
@@ -88,6 +94,9 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\board.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\damage_card.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\dial.py">
@@ -127,10 +136,16 @@ TK_LIBRARY=C:\Users\User\AppData\Local\Programs\Python\Python35\tcl\tk8.6</Envir
     <Compile Include="models\small_ship.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\weapon.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ui\board_renderer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ui\footprint_renderer.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ui\main_window.py">

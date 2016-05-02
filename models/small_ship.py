@@ -12,4 +12,3 @@ class SmallShip(Ship):
 
         # Set up the base size
         self.base_size = (40, 40)
-        self.firing_arc = 80

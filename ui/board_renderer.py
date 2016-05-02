@@ -1,3 +1,4 @@
+from ui.footprint_renderer import FootprintRenderer
 from ui.pilot_renderer import PilotRenderer
 
 import cairo
@@ -20,7 +21,8 @@ class BoardRenderer:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self._board_surface = cairo.ImageSurface.create_from_png(os.path.join(current_dir, BOARD_IMAGE))
         
-        self._sub_renderers = []
+        self._footprint_renderers = []
+        self._pilot_renderers = []
         self._refresh_sub_renderers()
 
     def render(self, context):
@@ -41,9 +43,11 @@ class BoardRenderer:
         context.restore()
 
         # Draw any sub-renderers
+        # Place the origin in the bottom left corner
         w, h = self._board.dimensions
-        context.scale(1.0 / w, 1.0 / h)
-        for sub_renderer in self._sub_renderers:
+        context.translate(0, 1)
+        context.scale(1.0 / w, -1.0 / h)
+        for sub_renderer in self._footprint_renderers + self._pilot_renderers:
             sub_renderer.render(context)
 
         context.restore()
@@ -52,8 +56,6 @@ class BoardRenderer:
         """
         Recreate sub-renderers, e.g. if the board contents have changed
         """
-        if len(self._sub_renderers) != len(self._board.pilots):
-            # Create sub-renderers
-            self._sub_renderers = []
-            for pilot in self._board.pilots:
-                self._sub_renderers.append(PilotRenderer(pilot))
+        self._footprint_renderers = [FootprintRenderer(footprint) for footprint in self._board.footprints]
+        if len(self._pilot_renderers) != len(self._board.pilots):
+            self._pilot_renderers = [PilotRenderer(pilot) for pilot in self._board.pilots]

@@ -1,6 +1,6 @@
 from gameplay.green_die import GreenDie
 from gameplay.red_die import RedDie
-from models.geometry import get_range_footprint
+from models.geometry import get_arc_footprint, get_range_footprint
 
 class Combat:
     """
@@ -40,11 +40,13 @@ class Combat:
                 chosen_weapon = weapon_options[0]
 
             # Declare target
-            target_options = self._get_target_options(pilot, chosen_weapon)
+            target_options, footprint = self._get_target_options(pilot, chosen_weapon)
             if not target_options:
                 print("Pilot {0} has no enemies in range to attack with weapon {1}".format(pilot.name, chosen_weapon.name))
             else:
+                self._game.board.footprints = [footprint]
                 chosen_target = player.choose_attack_target(pilot, target_options)
+                self._game.board.footprints = []
                 if chosen_target:
                     # Attack this target with the chosen weapon
                     self._begin_attack(pilot, chosen_target, chosen_weapon)
@@ -54,11 +56,17 @@ class Combat:
         Get the list of enemies that can be targeted by this pilot
         pilot: The pilot to attack with
         weapon: The weapon to attack with
-        return: List of pilots who can be attacked
+        return: ([pilots who can be attacked], footprint geometry)
         """
-        range_footprint = get_range_footprint(pilot.ship.get_base_shape(), weapon.ranges)
+        footprint = get_range_footprint(pilot.ship.get_base_shape(), weapon.ranges)
+        if weapon.firing_arc < 360:
+            # Not a turret - our range footprint needs to be within arc as well
+            arc_footprint = get_arc_footprint(pilot.ship, weapon)
+            footprint = footprint.intersection(arc_footprint)
+
         other_player_pilots = self._game.other_player(pilot.faction).pilots()
-        return [target_pilot for target_pilot in other_player_pilots if range_footprint.intersects(target_pilot.ship.get_base_shape())]
+        target_options = [target_pilot for target_pilot in other_player_pilots if footprint.intersects(target_pilot.ship.get_base_shape())]
+        return target_options, footprint
 
     def _begin_attack(self, pilot, target, weapon):
         """

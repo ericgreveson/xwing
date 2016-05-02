@@ -58,11 +58,11 @@ class MovementTemplate:
         type = self._type
         if type == MovementTemplate.Type.Turn:
             radius = MovementTemplate.TURN_RADII[self._length]
-            ep = radius * np.asarray([-1, 1])
+            ep = radius * np.asarray([1, -1])
         elif type == MovementTemplate.Type.Bank:
             radius = MovementTemplate.BANK_RADII[self._length]
             sqrt_half = math.sqrt(0.5)
-            ep = radius * np.asarray([sqrt_half - 1, sqrt_half])
+            ep = radius * np.asarray([1 - sqrt_half, sqrt_half])
         elif type == MovementTemplate.Type.Straight:
             ep = np.asarray([0, self._length * MovementTemplate.STANDARD_LENGTH])
         else:
